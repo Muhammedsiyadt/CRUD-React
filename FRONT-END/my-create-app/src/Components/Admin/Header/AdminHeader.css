@@ -1,0 +1,17 @@
+/* AdminHeader.css */
+
+.MuiAppBar-root {
+  background-color: #3498db; /* Customize the background color as needed */
+}
+
+.MuiToolbar-root {
+  padding: 0 20px; /* Add padding if needed */
+}
+
+.MuiTypography-root {
+  cursor: pointer; /* Make the Typography clickable */
+}
+
+.MuiButton-root {
+  font-size: 16px;
+}

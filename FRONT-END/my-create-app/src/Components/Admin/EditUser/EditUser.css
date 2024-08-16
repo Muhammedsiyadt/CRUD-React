@@ -1,0 +1,43 @@
+/* Ensure this file is imported in your EditUser.js file */
+
+.card {
+    background-color: #ffffff;
+    border-radius: 12px; /* Slightly rounded corners for a modern look */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+    padding: 20px; /* Add padding for internal spacing */
+    max-width: 500px; /* Set a maximum width for the card */
+    margin: 20px auto; /* Center the card horizontally and add vertical spacing */
+}
+
+.card-title {
+    color: #3498db; /* Primary color for the title */
+    font-weight: 600; /* Bold text */
+    margin-bottom: 20px; /* Space below the title */
+    text-align: center; /* Center the title */
+}
+
+.text-field {
+    margin-bottom: 16px; /* Space below each text field */
+}
+
+.text-field input {
+    background-color: #f9f9f9; /* Light background for input fields */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Rounded corners for inputs */
+    padding: 10px; /* Add padding inside the input fields */
+}
+
+.submit-button {
+    margin-top: 16px; /* Space above the button */
+    background-color: #3498db; /* Primary color for the button */
+    color: #ffffff; /* White text */
+    border-radius: 8px; /* Rounded corners for the button */
+    padding: 10px; /* Add padding inside the button */
+    text-transform: uppercase; /* Uppercase text */
+    font-weight: bold; /* Bold text */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.submit-button:hover {
+    background-color: #2980b9; /* Darker shade on hover */
+}
