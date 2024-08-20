@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Grid, TextField, Button, Typography, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import login_img from "../../../assets/login_page_img.jpg";
+import API from "../../../../config/AxiosConfig";
 
 const Login = () => {
   const [formValues, setFormValues] = useState({ email: "", password: "" });
@@ -31,14 +32,20 @@ const Login = () => {
     return errors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    const errors = validate();
+    try {
+      const errors = validate();
     if (Object.keys(errors).length === 0) {
       console.log("Form submitted successfully", formValues);
-      // Add logic for successful login here
+      const response = await API.post("/user/login",formValues)
+      navigate('/')
     } else {
       setFormErrors(errors);
+    }
+    } catch (error) {
+      console.log(error);
+      
     }
   };
 

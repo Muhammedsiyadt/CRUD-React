@@ -1,27 +1,38 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
 import { ExitToApp as ExitToAppIcon } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
 import './AdminHeader.css';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { adminLogout } from '../../../Redux/adminAuthSlice';
 
 const AdminHeader = () => {
   const navigate = useNavigate();
 
-  const handleDashboardClick = () => {
-    navigate('/admindashboard');
-  };
+  const dispatch = useDispatch()
 
   const handleLogoutClick = () => {
-    console.log('Logout clicked');
-    navigate('/adminlogin');
+    dispatch(adminLogout('hii')) 
+    navigate('/adminlogin'); 
   };
 
   return (
     <AppBar position="static">
       <Toolbar>
         <Box display="flex" alignItems="center" width="100%" justifyContent="space-between">
-          <Typography variant="h6" style={{ marginLeft: '20px' }} onClick={handleDashboardClick}>
-            Dashboard
+          <Typography 
+            variant="h6" 
+            className="dashboard-title"
+          >
+            <span className="colored-letter"><b>D</b></span>
+            <span className="colored-letter"><b>a</b></span>
+            <span className="colored-letter"><b>S</b></span>
+            <span className="colored-letter"><b>h</b></span>
+            <span className="colored-letter"><b>B</b></span>
+            <span className="colored-letter"><b>o</b></span>
+            <span className="colored-letter"><b>A</b></span>
+            <span className="colored-letter"><b>r</b></span>
+            <span className="colored-letter"><b>D</b></span>
           </Typography>
           <Button color="inherit" onClick={handleLogoutClick} endIcon={<ExitToAppIcon />}>
             Logout

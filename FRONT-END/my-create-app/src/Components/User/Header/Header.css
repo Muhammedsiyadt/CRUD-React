@@ -1,0 +1,98 @@
+/* Style for the navbar container */
+.navbar {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 15px 30px;
+    border-bottom: 2px solid #495057;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Styling for each colored letter */
+.colored-letter:nth-child(1) {
+    color: #e74c3c; /* Red */
+}
+
+.colored-letter:nth-child(2) {
+    color: #f39c12; /* Orange */
+}
+
+.colored-letter:nth-child(3) {
+    color: #f1c40f; /* Yellow */
+}
+
+.colored-letter:nth-child(4) {
+    color: #2ecc71; /* Green */
+}
+
+.colored-letter:nth-child(6) {
+    color: #3498db; /* Blue */
+}
+
+.colored-letter:nth-child(7) {
+    color: #9b59b6; /* Purple */
+}
+
+.colored-letter:nth-child(8) {
+    color: #e74c3c; /* Red */
+}
+
+.navbar-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* User Info container */
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+/* User Name styling */
+.user-name {
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Avatar styling */
+.user-avatar1 {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Avatar hover effects */
+.user-avatar1:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-color: #3498db;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 20px;
+    }
+
+    .navbar-title {
+        font-size: 20px;
+    }
+
+    .user-name {
+        font-size: 14px;
+    }
+
+    .user-avatar {
+        width: 35px;
+        height: 35px;
+    }
+}

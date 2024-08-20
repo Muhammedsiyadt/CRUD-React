@@ -15,3 +15,29 @@
 .MuiButton-root {
   font-size: 16px;
 }
+
+/* Add styles for the dashboard title */
+.dashboard-title {
+  display: flex;
+  font-weight: bold;
+  font-size: 24px; /* Adjust the font size as needed */
+}
+
+/* Style for each colored letter */
+.colored-letter {
+  display: inline-block;
+  font-size: inherit; /* Inherit font size from the parent */
+  margin: 0 2px; /* Add some spacing between letters */
+  transition: color 0.3s ease;
+}
+
+/* Define colors for each letter */
+.colored-letter:nth-child(1) { color: #e74c3c; } /* Red */
+.colored-letter:nth-child(2) { color: #f39c12; } /* Orange */
+.colored-letter:nth-child(3) { color: #f1c40f; } /* Yellow */
+.colored-letter:nth-child(4) { color: #2ecc71; } /* Green */
+.colored-letter:nth-child(5) { color: #3498db; } /* Blue */
+.colored-letter:nth-child(6) { color: #9b59b6; } /* Purple */
+.colored-letter:nth-child(7) { color: #8e44ad; } /* Dark Purple */
+.colored-letter:nth-child(8) { color: #1abc9c; } /* Teal */
+.colored-letter:nth-child(9) { color: #e67e22; } /* Orange */

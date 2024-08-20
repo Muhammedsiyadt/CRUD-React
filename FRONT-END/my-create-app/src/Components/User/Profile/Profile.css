@@ -1,0 +1,33 @@
+.profile-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #0000000c;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .profile-title {
+    text-align: center;
+  }
+  
+  .profile-form .text-field {
+    margin-top: 16px;
+  }
+  
+  .submit-button {
+    margin-top: 24px;
+    background-color: #007bff;
+  }
+  
+  .user-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+  }
+  
+  .user-avatar:hover {
+    border-color: #007bff;
+  }
+  
