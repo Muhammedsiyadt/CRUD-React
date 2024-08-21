@@ -1,55 +1,68 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper, Typography } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import './Dashbord.css';
 import API from '../../../../config/AxiosConfig';
 
-
-
-
 const Dashbord = () => {
   const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
   const navigate = useNavigate();
 
   const handleEdit = (id) => {
-    navigate(`/adminEditUser/${id}`);
+    const token = localStorage.getItem('adminToken');
+    navigate(`/adminEditUser/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   };
 
-  const handleDelete = async(id) => {
+  const handleDelete = async () => {
     try {
-      await API.delete(`/admin/deleteUser?id=${id}`)
-      setUsers(users.filter(user => user._id !== id));
+      const token = localStorage.getItem('adminToken');
+      await API.delete(`/admin/deleteUser?id=${selectedUser._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUsers(users.filter(user => user._id !== selectedUser._id));
+      setOpenDialog(false); 
     } catch (error) {
       console.log(error);
-      
     }
-  }; 
+  };
+
+  const confirmDelete = (user) => {
+    setSelectedUser(user);
+    setOpenDialog(true);
+  };
 
   const handleCreateUser = () => {
     navigate('/createUser');
   };
 
-  useEffect(() =>{
-
-      
-    const allUsers = async() => {
-      
+  useEffect(() => {
+    const allUsers = async () => {
       try {
-        const res = await API.get('/admin/getUsers')
-        // console.log(res.data);
-        setUsers(res.data.users) 
-
+        const token = localStorage.getItem('adminToken');
+        
+        const res = await API.get('/admin/getUsers', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setUsers(res.data.users);
       } catch (error) {
-        console.log(error); 
+        console.log(error);
       }
-
-    }
-    allUsers() 
-    
-  },[])    
+    };
+    allUsers();
+  }, []);
 
   return (
-    <Box p={3} m={2} >
+    <Box p={3} m={2}>
       <div className="create-user-button-container">
         <Button 
           variant="contained" 
@@ -69,7 +82,7 @@ const Dashbord = () => {
               <TableCell className="table-header">Actions</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody> 
+          <TableBody>
             {users.map((user) => (
               <TableRow key={user._id} className="table-row">
                 <TableCell>{user.name}</TableCell>
@@ -87,7 +100,7 @@ const Dashbord = () => {
                     <Button 
                       variant="outlined" 
                       color="secondary" 
-                      onClick={() => handleDelete(user._id)}
+                      onClick={() => confirmDelete(user)}
                       className="action-button"
                     >
                       Delete
@@ -99,6 +112,26 @@ const Dashbord = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Dialog
+        open={openDialog}
+        onClose={() => setOpenDialog(false)}
+      >
+        <DialogTitle>{"Confirm Deletion"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete {selectedUser?.name}?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDelete} color="secondary">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

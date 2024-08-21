@@ -5,11 +5,9 @@ import { Outlet, useNavigate } from 'react-router-dom'
 const AdminRouteProtecter = () => {
 
     const status = useSelector(state => state.admin.admin.status)  
-    useEffect(() => {
-      
+    useEffect(() => { 
         setLoading(false)
-        
-    },[])
+    },[]) 
 
     const [loading, setLoading] = useState(true)
 

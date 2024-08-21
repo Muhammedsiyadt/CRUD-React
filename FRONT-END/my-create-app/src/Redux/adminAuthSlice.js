@@ -17,8 +17,7 @@ const adminAuthSlice = createSlice({
     },
     adminLogout: (state, action) => {
       state.admin.status = false
-      console.log(action.payload);
-      
+      console.log(action.payload); 
     },
   },
 });

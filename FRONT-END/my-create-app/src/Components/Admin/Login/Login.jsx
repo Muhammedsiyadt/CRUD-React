@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
-import admin_img from '../../../assets/admin_logn_img.jpeg'; 
-import './Login.css'; // Import the CSS file
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import admin_img from '../../../assets/admin_logn_img.jpeg';
+import './Login.css'; 
 import API from '../../../../config/AxiosConfig';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { adminLogin } from '../../../Redux/adminAuthSlice';
 
 const AdminLogin = () => {
   const [formValues, setFormValues] = useState({ name: '', password: '' });
   const [formErrors, setFormErrors] = useState({ name: '', password: '' });
 
-  const dispatch = useDispatch()
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,12 +27,12 @@ const AdminLogin = () => {
   const validate = () => {
     let errors = {};
     if (!formValues.name) {
-      errors.name = "Name is required";
+       toast.error("Name is required")
     }
     if (!formValues.password) {
-      errors.password = "Password is required";
+       toast.error("Password is required")
     } else if (formValues.password.length < 6) {
-      errors.password = "Password must be at least 6 characters";
+       toast.error("Password must be at least 6 characters")
     }
     return errors;
   };
@@ -41,15 +42,25 @@ const AdminLogin = () => {
     try {
       const errors = validate();
       if (Object.keys(errors).length === 0) {
-        console.log("Admin Login:", formValues);
         const response = await API.post("/admin/adminlogin/check", formValues);
-        dispatch(adminLogin('hii'))  
-        navigate('/admindashboard');
+        if (response.data.status === 'success') {
+          const { token } = response.data;
+          localStorage.setItem('adminToken', token);
+
+          dispatch(adminLogin(token));
+
+          toast.success('Login successful!');
+
+          navigate('/admindashboard');
+        } else {
+          toast.error('Invalid credentials!');
+        }
       } else {
         setFormErrors(errors);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      toast.error('Login failed!');
     }
   };
 

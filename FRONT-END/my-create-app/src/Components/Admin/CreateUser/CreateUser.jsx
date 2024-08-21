@@ -44,7 +44,12 @@ const CreateUser = () => {
     if (Object.keys(errors).length === 0) {
         try {
             console.log("New user created:", user);
-            const response = await API.post("/admin/createuser", user);
+            const token = localStorage.getItem('adminToken');
+            const response = await API.post("/admin/createuser", user, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
 
             if (response.status === 201) {
                 navigate('/admindashboard');

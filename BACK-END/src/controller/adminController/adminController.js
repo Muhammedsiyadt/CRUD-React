@@ -2,26 +2,34 @@ const User = require("../../models/userSchema");
 const jwt = require("../../JWT/jwt");
 
 exports.loginCheck = (req, res) => {
-  const admin = {
-    name: "admin@gmail.com",
-    password: "Admin@123",
+    const admin = {
+      name: "admin@gmail.com",
+      password: "Admin@123",
+    };
+  
+    const { name, password } = req.body;
+  
+    if (name === admin.name && password === admin.password) {
+      const generatedToken = jwt.createToken(name);
+  
+      res.cookie('token', generatedToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 60 * 60 * 1000, 
+      });
+      
+      return res.status(200).json({ 
+        message: "Login successful",
+        status: "success",
+        token: generatedToken, 
+      });
+    } else {
+      return res.status(401).json({
+        message: "Invalid credentials",
+        status: "error",
+      });
+    }
   };
-
-  const { name, password } = req.body;
-
-  if (name === admin.name && password === admin.password) {
-    const generatedToken = jwt.createToken(name);
-    return res.status(200).json({
-      message: "Login successful",
-      status: "success",
-      token: generatedToken,
-    });
-  } else {
-    return res
-      .status(401)
-      .json({ message: "Invalid credentials", status: "error" });
-  }
-};
 
 exports.createUser = async (req, res) => {
   try {
@@ -49,13 +57,15 @@ exports.createUser = async (req, res) => {
 
 // FIND ALL USERS FOR DASHBOARD
 exports.findUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json({ users });
-  } catch (error) {
-    console.log(error);
-  }
-};
+    try {
+      const users = await User.find();
+      res.status(200).json({ users });
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      res.status(500).json({ error: "Failed to retrieve users" });
+    }
+  };
+  
 
 // DELETE USER FROM DASHBOARD
 exports.deleteUser = async (req, res) => {

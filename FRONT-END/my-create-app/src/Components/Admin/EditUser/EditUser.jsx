@@ -13,7 +13,12 @@ const EditUser = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await API.get(`/admin/findUserForEdit?id=${id}`);
+        const token = localStorage.getItem('adminToken');
+        const response = await API.get(`/admin/findUserForEdit?id=${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setUser({name : response.data.user.name, email : response.data.user.email,id:response.data.user._id});
       } catch (error) {
         console.error('Failed to fetch user:', error);
@@ -34,7 +39,12 @@ const EditUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await API.put(`/admin/updateUser`,user);
+      const token = localStorage.getItem('adminToken');
+      await API.put(`/admin/updateUser`,user, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log('Updated user:', user);
       navigate('/admindashboard');
     } catch (error) {

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextField, Button, Box, Typography, Avatar } from "@mui/material";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Profile.css"; // Ensure to create a corresponding CSS file
 import Header from "../Header/Header";
-import API from "../../../../config/AxiosConfig";
+import API from "../../../../config/AxiosConfig"; 
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [user, setUser] = useState({
@@ -13,6 +14,29 @@ const Profile = () => {
     password: "",
     photo: "",
   });
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const userData = async () => {
+      try {
+        const token = localStorage.getItem('usertoken') 
+
+        const response = await API.get('/user/get/userData', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        // console.log(1234,response.data.userData);
+        
+        setUser(response.data.userData)
+      } catch (error) {
+        console.log(error) 
+      }
+    }
+    userData()
+  },[])
+
   const [formErrors, setFormErrors] = useState({});
 
   const handleChange = (e) => {
@@ -27,7 +51,7 @@ const Profile = () => {
     const file = e.target.files[0];
     setUser({
       ...user,
-      photo: URL.createObjectURL(file),
+      photo: file,
     });
   };
 
@@ -56,8 +80,11 @@ const Profile = () => {
       try {
         // Assuming the user ID is available
         const userId = "user-id"; // Replace with actual user ID
+        console.log(12345,user);
+        
         await API.put(`/user/updateprofile`, user);
         toast.success("Profile updated successfully!");
+        navigate('/')
       } catch (error) {
         console.error("Error updating user:", error);
         toast.error("Failed to update profile. Please try again.");

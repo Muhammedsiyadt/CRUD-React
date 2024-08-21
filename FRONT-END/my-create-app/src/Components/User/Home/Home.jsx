@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../Header/Header';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
+import API from '../../../../config/AxiosConfig';
 
 const Home = () => {
   const navigate = useNavigate()
+
+  
+
   return (
     <>
       <Header />
@@ -14,10 +18,10 @@ const Home = () => {
         <p className="welcome-text">
           Manage your data with ease. This application allows you to create, read, update, and delete records efficiently.
         </p>
-        <div className="action-buttons">
+        {/* <div className="action-buttons">
           <button onClick={() => {navigate('/edit')}} className="action-button">Get Started</button>
           <button className="action-button">Learn More</button>
-        </div>
+        </div> */}
       </div>
       </div>
     </>

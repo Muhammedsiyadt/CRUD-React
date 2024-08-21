@@ -3,11 +3,17 @@ import { Box, Grid, TextField, Button, Typography, Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import login_img from "../../../assets/login_page_img.jpg";
 import API from "../../../../config/AxiosConfig";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from "react-redux";
+import { userLogin } from "../../../Redux/userAuth";
 
 const Login = () => {
   const [formValues, setFormValues] = useState({ email: "", password: "" });
   const [formErrors, setFormErrors] = useState({ email: "", password: "" });
+  
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,22 +38,35 @@ const Login = () => {
     return errors;
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const errors = validate();
-    if (Object.keys(errors).length === 0) {
-      console.log("Form submitted successfully", formValues);
-      const response = await API.post("/user/login",formValues)
-      navigate('/')
-    } else {
-      setFormErrors(errors);
-    }
+        const errors = validate();
+        if (Object.keys(errors).length === 0) {
+            console.log("Form submitted successfully", formValues);
+            const response = await API.post("/user/login", formValues);
+
+            if (response.data.status === "success") {
+                const { token } = response.data;
+                
+                dispatch(userLogin(token));
+                
+                toast.success("Login successful!");
+                navigate('/');
+            } else {
+                toast.error("Invalid credentials!");
+            }
+        } else {
+            setFormErrors(errors);
+            toast.error("Please fix the errors in the form.");
+        }
     } catch (error) {
-      console.log(error);
-      
+        console.error(error);
+        toast.error("Login failed. Please try again.");
     }
-  };
+};
+
+
 
   const handleSignUpRedirect = () => {
     navigate("/signup");

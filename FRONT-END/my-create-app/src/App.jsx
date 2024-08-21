@@ -13,6 +13,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Profile from "./Components/User/Profile/Profile";
 import AdminLoginProtecter from "./Routes/AdminLoginProtecter";
 import AdminRouteProtecter from "./Routes/AdminRouteProtecter";
+import UserLoginProtecter from "./Routes/UserLoginProtect";
+import UserRouteProtecter from "./Routes/UserRouterProtector";
 
 const App = () => {
   return (
@@ -20,19 +22,26 @@ const App = () => {
       <ToastContainer />
       <Router>
         <Routes>
-          <Route path="/" element={<HomeUser />} />
-          <Route path="/login" element={<Loginpage />} />
-          <Route path="/signup" element={<Signuppage />} />
+          <Route element={<UserLoginProtecter />}>
+            <Route path="/login" element={<Loginpage />} />
+          </Route>
+
+          <Route element={<UserRouteProtecter />}>
+            <Route path="/" element={<HomeUser />} />
+            <Route path="/signup" element={<Signuppage />} /> 
+            {/* <Route path="/edit" element={<Edit />} /> */}
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+
           <Route element={<AdminLoginProtecter />}>
             <Route path="/adminlogin" element={<AdminLoginPage />} />
           </Route>
+
           <Route element={<AdminRouteProtecter />}>
             <Route path="/admindashboard" element={<AdminDashboard />} />
             <Route path="/adminEditUser/:id" element={<EditUser />} />
             <Route path="/createUser" element={<CreateUser />} />
           </Route>
-          {/* <Route path="/edit" element={<Edit />} /> */}
-          <Route path="/profile" element={<Profile />} />
         </Routes>
       </Router>
     </>

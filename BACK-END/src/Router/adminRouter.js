@@ -1,22 +1,24 @@
-const express = require('express')
-const router = express.Router()
-const controller = require('../controller/adminController/adminController')
+const express = require('express');
+const router = express.Router();
+const controller = require('../controller/adminController/adminController');
+const { routeProtect } = require('../Middleware/Middleware');
 
-router.post('/adminlogin/check',controller.loginCheck)
+// Admin login route (no protection required)
+router.post('/adminlogin/check', controller.loginCheck);
 
-router.post('/createuser',controller.createUser)
+// All routes below require authentication
+router.post('/createuser', routeProtect, controller.createUser);
 
 // Find all users for dashboard
-router.get('/getUsers', controller.findUsers)
+router.get('/getUsers', routeProtect, controller.findUsers);
 
-// delete User
-router.delete('/deleteUser', controller.deleteUser)
+// Delete user
+router.delete('/deleteUser', routeProtect, controller.deleteUser);
 
-// Edit User
-router.get('/findUserForEdit', controller.findUserForEdit)
+// Find a user for editing
+router.get('/findUserForEdit', routeProtect, controller.findUserForEdit);
+
 // Update user data
-router.put('/updateUser', controller.updateUserData)
-
-
+router.put('/updateUser', routeProtect, controller.updateUserData);
 
 module.exports = router;

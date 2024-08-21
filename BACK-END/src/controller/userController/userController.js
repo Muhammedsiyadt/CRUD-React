@@ -1,6 +1,8 @@
 
 const User = require('../../models/userSchema')
 
+const jwt = require('../../JWT/jwt')
+
 
 
 exports.signUp = async (req, res) => {
@@ -28,8 +30,6 @@ exports.signUp = async (req, res) => {
 };
 
 
-
-
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -37,17 +37,29 @@ exports.login = async (req, res) => {
         const user = await User.findOne({ email });
 
         if (!user) {
-            console.log('This is user not fount');
+            console.log('User not found');
             return res.status(400).json({ message: "User not found" });
         }
 
         if (password !== user.password) {
+            
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
-        console.log('Success.....');
-        
-        res.status(200).json({ message: "Login successful", user });
+        const generatedToken = jwt.createToken(email);
+        console.log("Generated Token:", generatedToken);
+
+        res.cookie('usertoken', generatedToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 60 * 60 * 1000, 
+        });
+
+        return res.status(200).json({ 
+            message: "Login successful",
+            status: "success",
+            token: generatedToken,
+        });
     } catch (error) {
         console.error("Error in login:", error);
         res.status(500).json({ message: "Server error" });
@@ -55,7 +67,41 @@ exports.login = async (req, res) => {
 };
 
 
-exports.updateProfile = (req, res) => {
-    console.log(req.body);
+
+exports.updateProfile = async (req, res) => {
+    try {
+        const { email, name, password, image } = req.body;
+        const updatedData = { name, password, image };
+        
+        const updatedUser = await User.findOneAndUpdate(
+            { email },
+            updatedData,
+            { new: true }
+        );
+        
+        if (!updatedUser) {
+            return res.status(400).json({ message: "User not found" });
+        }
+        
+        console.log("User updated successfully", updatedUser);
+        res.status(200).json({ message: "Profile updated successfully", user: updatedUser });
+    } catch (error) {
+        console.error("Error in updateProfile:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+};
+
+
+// GET USER DATA 
+exports.getUserData = async (req, res) => {
+   try {
     
+     const userData= await User.findOne({email:req.user.payload})
+      res.status(200).json({userData})
+
+
+
+   } catch (error) {
+       console.log(error)
+   }
 }
