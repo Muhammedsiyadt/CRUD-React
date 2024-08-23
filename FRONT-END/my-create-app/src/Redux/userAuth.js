@@ -18,7 +18,7 @@ const UserAuthSlice = createSlice({
     userLogout: (state, action) => {
       state.user.status = false;
       console.log(action.payload); 
-      localStorage.removeItem('usertoken'); // Clear the token on logout
+      localStorage.removeItem('usertoken');
     },
   },
 });

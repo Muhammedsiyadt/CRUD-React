@@ -27,8 +27,6 @@ const Profile = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        // console.log(1234,response.data.userData);
-        
         setUser(response.data.userData)
       } catch (error) {
         console.log(error) 
@@ -78,13 +76,29 @@ const Profile = () => {
     const errors = validate();
     if (Object.keys(errors).length === 0) {
       try {
-        // Assuming the user ID is available
-        const userId = "user-id"; // Replace with actual user ID
-        console.log(12345,user);
-        
-        await API.put(`/user/updateprofile`, user);
+        const formData = new FormData();
+        formData.append('name', user.name);
+        formData.append('email', user.email);
+        formData.append('password', user.password);
+        if (user.photo) {
+          formData.append('image', user.photo); // Append the file
+        }
+  
+        const token = localStorage.getItem('usertoken');
+  
+        // Make the API call to update the profile
+        const response = await API.put('/user/updateprofile', formData, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+  
+        // Assuming the response contains the updated user data
+        setUser(response.data.userData); // Update the state with new user data
+  
         toast.success("Profile updated successfully!");
-        navigate('/')
+        navigate('/');
       } catch (error) {
         console.error("Error updating user:", error);
         toast.error("Failed to update profile. Please try again.");
@@ -94,7 +108,9 @@ const Profile = () => {
       toast.error("Please fix the errors in the form.");
     }
   };
-
+  
+  
+  
   return (
     <>
       <Header />
@@ -106,7 +122,7 @@ const Profile = () => {
           <Box display="flex" flexDirection="column" alignItems="center" mb={3}>
             <Avatar
               alt="User Photo"
-              src={user.photo}
+              src={user.image}
               sx={{ width: 100, height: 100 }}
               className="user-avatar"
             />
