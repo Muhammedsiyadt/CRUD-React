@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import './Dashbord.css';
 import API from '../../../../config/AxiosConfig';
@@ -8,6 +8,7 @@ const Dashbord = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); // State for search input
   const navigate = useNavigate();
 
   const handleEdit = (id) => {
@@ -47,7 +48,6 @@ const Dashbord = () => {
     const allUsers = async () => {
       try {
         const token = localStorage.getItem('adminToken');
-        
         const res = await API.get('/admin/getUsers', {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,6 +61,12 @@ const Dashbord = () => {
     allUsers();
   }, []);
 
+  // Filter users based on the search term
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <Box p={3} m={2}>
       <div className="create-user-button-container">
@@ -73,6 +79,18 @@ const Dashbord = () => {
           Create User
         </Button>
       </div>
+      
+      {/* Search input */}
+      <TextField 
+        fullWidth
+        variant="outlined"
+        placeholder="Search users by name or email"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="search-input"
+        margin="normal"
+      />
+
       <TableContainer component={Paper} className="table-container">
         <Table>
           <TableHead>
@@ -83,7 +101,7 @@ const Dashbord = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((user) => (
+            {filteredUsers.map((user) => (
               <TableRow key={user._id} className="table-row">
                 <TableCell>{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>

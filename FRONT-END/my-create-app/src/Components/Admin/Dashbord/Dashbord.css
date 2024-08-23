@@ -37,3 +37,8 @@
 .table-row:hover {
     background-color: #f9f9f9; 
 }
+
+.search-input {
+    margin-bottom: 20px;
+}
+

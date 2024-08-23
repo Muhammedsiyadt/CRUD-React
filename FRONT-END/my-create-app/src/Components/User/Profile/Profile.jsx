@@ -15,25 +15,24 @@ const Profile = () => {
     photo: "",
   });
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userData = async () => {
       try {
-        const token = localStorage.getItem('usertoken') 
-
+        const token = localStorage.getItem('usertoken');
         const response = await API.get('/user/get/userData', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        setUser(response.data.userData)
+        setUser(response.data.userData);
       } catch (error) {
-        console.log(error) 
+        console.log(error);
       }
     }
-    userData()
-  },[])
+    userData();
+  }, []);
 
   const [formErrors, setFormErrors] = useState({});
 
@@ -41,8 +40,21 @@ const Profile = () => {
     const { name, value } = e.target;
     setUser({
       ...user,
-      [name]: value.trim(), 
+      [name]: value.trim(),
     });
+
+    // Custom validation for name input
+    if (name === 'name' && /[^a-zA-Z\s]/.test(value)) {
+      setFormErrors({
+        ...formErrors,
+        name: 'Name must contain only letters and spaces.',
+      });
+    } else {
+      setFormErrors({
+        ...formErrors,
+        [name]: '',
+      });
+    }
   };
 
   const handlePhotoChange = (e) => {
@@ -57,6 +69,8 @@ const Profile = () => {
     let errors = {};
     if (!user.name) {
       errors.name = "Name is required";
+    } else if (/[^a-zA-Z\s]/.test(user.name)) {
+      errors.name = "Name must contain only letters and spaces.";
     }
     if (!user.email) {
       errors.email = "Email is required";
@@ -108,9 +122,7 @@ const Profile = () => {
       toast.error("Please fix the errors in the form.");
     }
   };
-  
-  
-  
+
   return (
     <>
       <Header />
@@ -122,7 +134,7 @@ const Profile = () => {
           <Box display="flex" flexDirection="column" alignItems="center" mb={3}>
             <Avatar
               alt="User Photo"
-              src={user.image}
+              src={user.photo ? URL.createObjectURL(user.photo) : ''}
               sx={{ width: 100, height: 100 }}
               className="user-avatar"
             />

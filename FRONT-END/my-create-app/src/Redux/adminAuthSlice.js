@@ -6,7 +6,7 @@ const initialState = {
   },
 };  
 
-const adminAuthSlice = createSlice({
+const adminAuthSlice = createSlice({ 
   name: "admin",
   initialState,
 

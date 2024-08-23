@@ -66,13 +66,13 @@ const AdminLogin = () => {
 
   return (
     <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      className="admin-login-container"
+    display="flex"
+    flexDirection="column"
+    alignItems="center"
+    justifyContent="center"
+    className="admin-login-container"
     >
-      <img src={admin_img} alt="Admin Login" className="admin-login-image" />
+    <img src={admin_img} alt="Admin Login" className="admin-login-image" />
       <Typography variant="h5" component="h1" gutterBottom className="admin-login-title">
         Admin Login
       </Typography>
