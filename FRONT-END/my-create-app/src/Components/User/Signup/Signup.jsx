@@ -53,8 +53,8 @@ const SignUp = () => {
 
   return (
     <div>
-      <Grid container alignItems="center" justifyContent="center" style={{ minHeight: "100vh" }}>
-        <Grid item xs={12} md={6} lg={3}>
+      <Grid container alignItems="center" justifyContent="center" style={{ minHeight: "100vh", background: "skyBlue"  }}>
+        <Grid style={{background: "white", borderRadius: "10px"}}  item xs={12} md={6} lg={3}>
           <Box display="flex" flexDirection="column" alignItems="center" p={2} boxShadow={3} borderRadius={2}>
             <img src={signup_img} alt="Sign Up" style={{ width: "150px", height: "150px", marginBottom: "20px" }} />
             <Typography variant="h5" component="h1" gutterBottom>
@@ -102,7 +102,7 @@ const SignUp = () => {
                 helperText={formErrors.password}
                 required
               />
-              <Button variant="contained" color="primary" fullWidth type="submit" style={{ marginTop: "20px" }}>
+              <Button variant="contained" color="primary" fullWidth type="submit" style={{ marginTop: "20px", background: "red" }}>
                 Sign Up
               </Button>
             </form>
