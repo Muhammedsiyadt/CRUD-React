@@ -137,7 +137,7 @@ const Dashbord = () => {
       >
         <DialogTitle>{"Confirm Deletion"}</DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText>  
             Are you sure you want to delete {selectedUser?.name}?
           </DialogContentText>
         </DialogContent>
