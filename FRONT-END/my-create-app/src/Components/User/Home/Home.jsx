@@ -29,10 +29,10 @@ const Home = () => {
       } catch (error) {
         if(axios.isAxiosError(error)){
             console.log("erorr",error)
-            if(error.response.status==403){
+            if(error.response.status == 403){
               console.log("successes")
               localStorage.removeItem("usertoken")
-              navigate("/ln") 
+              navigate("/login") 
       
             }
            console.log(error.response.status,"ooo")

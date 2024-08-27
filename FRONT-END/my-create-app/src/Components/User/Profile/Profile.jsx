@@ -28,7 +28,16 @@ const Profile = () => {
         });
         setUser(response.data.userData);
       } catch (error) {
-        console.log(error);
+        if(axios.isAxiosError(error)){
+          console.log("erorr",error)
+          if(error.response.status==403){
+            console.log("successes")
+            localStorage.removeItem("usertoken")
+            navigate("/login") 
+    
+          }
+         console.log(error.response.status,"ooo")
+      }
       }
     }
     userData();

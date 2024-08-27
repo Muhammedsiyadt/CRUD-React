@@ -10,4 +10,4 @@ router.get('/get/userData', routeProtect, isUser , userController.getUserData);
 router.put('/updateprofile', routeProtect,isUser, upload.single('image'), userController.updateProfile);
 router.get('/userHome/userData', routeProtect,isUser, userController.getDataFromHome)
 
-module.exports = router;
+module.exports = router; 

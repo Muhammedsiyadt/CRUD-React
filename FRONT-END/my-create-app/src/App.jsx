@@ -15,6 +15,7 @@ import AdminLoginProtecter from "./Routes/AdminLoginProtecter";
 import AdminRouteProtecter from "./Routes/AdminRouteProtecter";
 import UserLoginProtecter from "./Routes/UserLoginProtect";
 import UserRouteProtecter from "./Routes/UserRouterProtector";
+import Error from "./Components/User/error/Error";
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
             <Route path="/adminEditUser/:id" element={<EditUser />} />
             <Route path="/createUser" element={<CreateUser />} />
           </Route>
+          <Route path="/error" element={<Error />} />
         </Routes>
       </Router>
     </>
