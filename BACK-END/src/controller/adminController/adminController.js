@@ -2,6 +2,8 @@ const User = require("../../models/userSchema");
 const jwt = require("../../JWT/jwt");
 
 exports.loginCheck = (req, res) => {
+  console.log('hello');
+  
     const admin = {
       name: "admin@gmail.com",
       password: "Admin@123",
@@ -21,7 +23,7 @@ exports.loginCheck = (req, res) => {
       return res.status(200).json({ 
         message: "Login successful",
         status: "success",
-        token: generatedToken, 
+        token: generatedToken,  
       });
     } else {
       return res.status(401).json({

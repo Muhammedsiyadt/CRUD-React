@@ -74,9 +74,9 @@ const Login = () => {
 
   return (
     <div>
-      <Grid container alignItems="center" justifyContent="center" style={{ minHeight: "100vh", background: "skyBlue" }}>
+      <Grid container alignItems="center" justifyContent="center" style={{ minHeight: "100vh"}}>
         <Grid style={{background: "white", borderRadius: "10px"}}  item xs={12} md={6} lg={3}> {/* Adjusted lg value to reduce size */}
-          <Box display="flex" flexDirection="column" alignItems="center" p={2} boxShadow={3} borderRadius={2}>
+          <Box display="flex" flexDirection="column" alignItems="center" p={2} boxShadow={5} borderRadius={2}>
             <img src={login_img} alt="Crud logo" style={{ width: "150px", height: "150px", marginBottom: "20px" }} /> {/* Decreased image size */}
             <Typography variant="h5" component="h1" gutterBottom>
               Login

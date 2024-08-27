@@ -5,7 +5,7 @@ const cloudinary = require('../../cloudinaryConfig');
 exports.signUp = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    const image = req.file ? req.file.path : null; // Get the Cloudinary URL
+    const image = req.file ? req.file.path : null
 
     const existingUser = await User.findOne({ email });
 

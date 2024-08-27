@@ -15,13 +15,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));  
 
 app.use(
-  cors({
+  cors({ 
     origin: "http://localhost:5173",       
     credentials: true,
   })
 ); 
 
-app.use(morgan("tiny"));
+app.use(morgan("tiny")); 
 
 app.get("/", (req, res) => {
   res.send("Server ok");

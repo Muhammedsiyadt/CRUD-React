@@ -3,6 +3,7 @@ import Header from '../Header/Header';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 import API from '../../../../config/AxiosConfig';
+import axios from 'axios';
 
 const Home = () => {
   const navigate = useNavigate()
@@ -15,6 +16,7 @@ const Home = () => {
   });
 
   useEffect(() => {
+    console.log("hiiiiiiii")
     const userData = async () => {
       try {
         const token = await localStorage.getItem('usertoken')
@@ -25,7 +27,16 @@ const Home = () => {
         });
         setUser(res.data.userData);
       } catch (error) {
-        console.log(error);
+        if(axios.isAxiosError(error)){
+            console.log("erorr",error)
+            if(error.response.status==403){
+              console.log("successes")
+              localStorage.removeItem("usertoken")
+              navigate("/ln") 
+      
+            }
+           console.log(error.response.status,"ooo")
+        }
       }
     }
     userData()
@@ -36,7 +47,7 @@ const Home = () => {
       <Header />
       <div className="home-container">
         <div className="welcome-section">
-          {
+          {         
             user.image ?    
             <img src={user.image} alt="User Profile" /> :
             <>
