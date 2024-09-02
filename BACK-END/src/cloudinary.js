@@ -8,7 +8,7 @@ const storage = new CloudinaryStorage({
     folder: 'profile_pictures',
     allowedFormats: ['jpg', 'jpeg', 'png'],
   },
-});
+});    
 
 const upload = multer({ storage });
 
