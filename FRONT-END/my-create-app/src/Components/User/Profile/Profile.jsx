@@ -122,13 +122,13 @@ const Profile = () => {
   
         toast.success("Profile updated successfully!");
         navigate('/');
-      } catch (error) {
-        console.error("Error updating user:", error);
+      } catch (error) {   
+        console.error("Error updating user:", error);   
         toast.error("Failed to update profile. Please try again.");
       }
     } else {
       setFormErrors(errors);
-      toast.error("Please fix the errors in the form.");
+      toast.error("Please fix the errors in the form.");  
     }
   };
 

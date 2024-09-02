@@ -16,13 +16,12 @@ const Home = () => {
   });
 
   useEffect(() => {
-    console.log("hiiiiiiii")
     const userData = async () => {
       try {
         const token = await localStorage.getItem('usertoken')
         const res = await API.get('/user/userHome/userData', {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,     
           },
         });
         setUser(res.data.userData);
