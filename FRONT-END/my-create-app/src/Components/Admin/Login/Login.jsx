@@ -49,9 +49,6 @@ const AdminLogin = () => {
 
           dispatch(adminLogin(token));
 
-          console.log("HAPPY TEACHERS") 
-          
-
           toast.success('Login successful!');
 
           navigate('/admindashboard');
