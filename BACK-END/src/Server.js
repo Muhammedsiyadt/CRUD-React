@@ -7,27 +7,27 @@ const morgan = require("morgan");
 const database = require('../src/models/connection')
 
 const userRouter = require("./Router/userRouter"); 
-const adminRouter = require("./Router/adminRouter"); 
+const adminRouter = require("./Router/adminRouter");   
   
 database() 
- 
+   
 app.use(express.json());  
 app.use(express.urlencoded({ extended: true }));  
 
-app.use( 
-  cors({ 
+app.use(   
+  cors({   
     origin: "http://localhost:5173",         
     credentials: true,
   })  
-); 
+);   
 
 
 app.use(morgan("tiny"));         
     
 app.get("/", (req, res) => { 
-  res.send("Server ok");       
+  res.send("Server ok");         
 });
-    
+       
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);         
 
