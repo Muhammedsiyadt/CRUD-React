@@ -1,22 +1,22 @@
 // import express from 'express' 
-require('dotenv').config()
-const express = require("express");
-const app = express();
-const cors = require("cors");
-const morgan = require("morgan");
+require('dotenv').config() 
+const express = require("express"); 
+const app = express(); 
+const cors = require("cors"); 
+const morgan = require("morgan"); 
 const database = require('../src/models/connection')
 
 const userRouter = require("./Router/userRouter"); 
 const adminRouter = require("./Router/adminRouter");   
   
 database()    
-   
+     
 app.use(express.json());    
 app.use(express.urlencoded({ extended: true }));  
 
 app.use(         
   cors({   
-    origin: "http://localhost:5173",          
+    origin: "http://localhost:5173",            
     credentials: true,
   })   
 );   
