@@ -9,12 +9,12 @@ const database = require('../src/models/connection')
 const userRouter = require("./Router/userRouter"); 
 const adminRouter = require("./Router/adminRouter");   
   
-database()    
-     
+database()     
+       
 app.use(express.json());    
 app.use(express.urlencoded({ extended: true }));  
 
-app.use(         
+app.use(          
   cors({   
     origin: "http://localhost:5173",            
     credentials: true,
