@@ -24,14 +24,14 @@ app.use(
    
 app.use(morgan("tiny"));         
      
-app.get("/", (req, res) => {       
+app.get("/", (req, res) => {         
   res.send("Server ok");          
-}); 
+});   
         
 app.use("/user", userRouter);   
-app.use("/admin", adminRouter);                  
-   
+app.use("/admin", adminRouter);                    
+     
 app.listen(3000, () => {
   console.log(`Server is running on port ${process.env.PORT}`);   
 });    
-     
+       
