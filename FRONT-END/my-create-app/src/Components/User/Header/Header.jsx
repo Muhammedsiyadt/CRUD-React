@@ -8,23 +8,23 @@ import { userLogout } from '../../../Redux/userAuth';
 const Header = () => {
   const navigate = useNavigate()
 
-  const handleAvatarClick = () => {
+  const handleAvatarClick = () => {   
     navigate('/profile');
   };
 
   const dispatch = useDispatch() 
-
+    
   const handleLogout = () => {
     dispatch(userLogout()) 
     navigate('/login')
   }
 
   return (
-    <div className="navbar">
+    <div className="navbar">   
       <h2 className="navbar-title">
         <span className="colored-letter">C</span>
         <span className="colored-letter">r</span>
-        <span className="colored-letter">u</span>
+        <span className="colored-letter">u</span>   
         <span className="colored-letter">D</span>
         <span>-</span>
         <span className="colored-letter">a</span>
